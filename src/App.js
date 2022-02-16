@@ -1,6 +1,7 @@
 import React from "react";
 import { FlamegraphRenderer } from "pyroscope";
 import "pyroscope/index.css";
+// These are the exact response from the /render endpoint
 import { PyroscopeCpu, PyroscopeCpuDiff } from "./TestData";
 
 function transform(profile) {
@@ -10,7 +11,6 @@ function transform(profile) {
     const mutableLevels = [...levels];
 
     function deltaDiff(lvls, start, step) {
-      // eslint-disable-next-line no-restricted-syntax
       for (const level of lvls) {
         let prev = 0;
         for (let i = start; i < level.length; i += step) {
@@ -53,13 +53,19 @@ const diffCpuProfile = transform(PyroscopeCpuDiff);
 const cpuProfile = transform(PyroscopeCpu);
 
 function App() {
+  const [profile, setProfile] = React.useState(cpuProfile);
+
   return (
-    <FlamegraphRenderer
-      flamebearer={cpuProfile}
-      viewType="single"
-      display="flamegraph"
-      showToolbar={false}
-    />
+    <div>
+      <button onClick={() => setProfile(cpuProfile)}>Single</button>
+      <button onClick={() => setProfile(diffCpuProfile)}>Diff</button>
+      <FlamegraphRenderer
+        flamebearer={profile}
+        viewType="single"
+        display="flamegraph"
+        showToolbar={false}
+      />
+    </div>
   );
 }
 
