@@ -1,39 +1,61 @@
 import React from "react";
 import { FlamegraphRenderer } from "pyroscope";
 import "pyroscope/index.css";
+import { PyroscopeCpu, PyroscopeCpuDiff } from "./TestData";
 
-const SimpleTree = {
-  topLevel: 0,
-  rangeMin: 0,
-  format: "single",
-  numTicks: 988,
-  sampleRate: 100,
-  names: [
-    "total",
-    "runtime.main",
-    "main.slowFunction",
-    "main.work",
-    "main.main",
-    "main.fastFunction",
-  ],
-  levels: [
-    [0, 988, 0, 0],
-    [0, 988, 0, 1],
-    [0, 214, 0, 5, 214, 3, 2, 4, 217, 771, 0, 2],
-    [0, 214, 214, 3, 216, 1, 1, 5, 217, 771, 771, 3],
-  ],
+function transform(profile) {
+  const copy = JSON.parse(JSON.stringify(profile));
 
-  rangeMax: 1,
-  units: "samples",
-  fitMode: "HEAD",
+  function deltaDiffWrapper(format, levels) {
+    const mutableLevels = [...levels];
 
-  spyName: "gospy",
-};
+    function deltaDiff(lvls, start, step) {
+      // eslint-disable-next-line no-restricted-syntax
+      for (const level of lvls) {
+        let prev = 0;
+        for (let i = start; i < level.length; i += step) {
+          level[i] += prev;
+          prev = level[i] + level[i + 1];
+        }
+      }
+    }
+
+    if (format === "double") {
+      deltaDiff(mutableLevels, 0, 7);
+      deltaDiff(mutableLevels, 3, 7);
+    } else {
+      deltaDiff(mutableLevels, 0, 4);
+    }
+
+    return mutableLevels;
+  }
+
+  function decodeFlamebearer(fb) {
+    fb.flamebearer.levels = deltaDiffWrapper(
+      fb.metadata.format,
+      fb.flamebearer.levels
+    );
+    return fb;
+  }
+
+  // mutate the copy
+  decodeFlamebearer(copy);
+
+  return {
+    ...copy.metadata,
+    ...copy.flamebearer,
+    leftTicks: copy.leftTicks,
+    rightTicks: copy.rightTicks,
+  };
+}
+
+const diffCpuProfile = transform(PyroscopeCpuDiff);
+const cpuProfile = transform(PyroscopeCpu);
 
 function App() {
   return (
     <FlamegraphRenderer
-      flamebearer={SimpleTree}
+      flamebearer={cpuProfile}
       viewType="single"
       display="flamegraph"
       showToolbar={false}
