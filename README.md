@@ -18,3 +18,12 @@ For that you need to:
 4. Update your jest config to not reset mocks ([./jest.config.ts](./jest.config.ts))
 
 An example test is available at [./src/App.spec.jsx](./src/App.spec.jsx)
+
+# Running
+```
+yarn
+yarn start
+```
+
+# Output
+![image](https://user-images.githubusercontent.com/23323466/164309751-6c46e9b0-c2b2-47d6-b3a6-50dd5954cfa9.png)
