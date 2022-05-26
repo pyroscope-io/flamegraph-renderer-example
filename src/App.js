@@ -11,15 +11,15 @@ function App() {
       <FlamegraphRenderer
         profile={pyroscopeCPU}
         viewType="single"
-        display="flamegraph"
-        showToolbar={false}
+        onlyDisplay="flamegraph"
+        showToolbar={true}
       />
       <h1>Pyroscope Diff Flamegraph</h1>
       <FlamegraphRenderer
         profile={pyroscopeDiffCPU}
         viewType="single"
-        display="flamegraph"
-        showToolbar={false}
+        onlyDisplay="flamegraph"
+        showToolbar={true}
       />
     </div>
   );
