@@ -1416,10 +1416,10 @@
     schema-utils "^3.0.0"
     source-map "^0.7.3"
 
-"@pyroscope/flamegraph@0.6.3":
-  version "0.6.3"
-  resolved "https://registry.yarnpkg.com/@pyroscope/flamegraph/-/flamegraph-0.6.3.tgz#d7fafd1076f44281f48d719da78b90b99bc72906"
-  integrity sha512-1xtEBklsE/3SgtPm++jE1TZAGM2v0Afe8Q2dMTQHsl/xIDSS71HyrDioRpM+lveCr1TMAYQJH4j2leSP0eh/qw==
+"@pyroscope/flamegraph@^0.10.1":
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/@pyroscope/flamegraph/-/flamegraph-0.10.1.tgz#5e86b7e229604bb4ee828f5f3a8c80561a0323bb"
+  integrity sha512-EU7+G3GPALAH38f8plnrjk2rHgz52LtnzlPWZ0J0P4Q11Pb0eWudtRTNIORcs1o6vakmZnEbid40QUVCpo81hw==
   dependencies:
     "true-myth" "^5.1.2"
 
