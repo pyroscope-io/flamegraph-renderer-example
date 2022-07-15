@@ -3,10 +3,11 @@ import { FlamegraphRenderer, convertJaegerTraceToProfile } from "@pyroscope/flam
 import "@pyroscope/flamegraph/dist/index.css";
 import { pyroscopeCPU } from "./TestData";
 import { pyroscopeDiffCPU } from "./TestDiffData";
+import { jaegerTraceC } from "./TestTraceC";
 import { jaegerTraceB } from "./TestTraceB";
 import { jaegerTraceA } from "./TestTraceA";
 
-let trace = jaegerTraceB.data[0]
+let trace = jaegerTraceC.data[0]
 let convertedProfile = convertJaegerTraceToProfile(trace);
 
 function App() {
