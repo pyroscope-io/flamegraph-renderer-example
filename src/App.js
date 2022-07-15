@@ -1,10 +1,13 @@
 import React from "react";
-import { FlamegraphRenderer } from "@pyroscope/flamegraph";
+import { FlamegraphRenderer, convertJaegerTraceToProfile } from "@pyroscope/flamegraph";
 import "@pyroscope/flamegraph/dist/index.css";
 import { pyroscopeCPU } from "./TestData";
 import { pyroscopeDiffCPU } from "./TestDiffData";
-import {convertTo}
+import { jaegerTraceB } from "./TestTraceB";
 import { jaegerTraceA } from "./TestTraceA";
+
+let trace = jaegerTraceB.data[0]
+let convertedProfile = convertJaegerTraceToProfile(trace);
 
 function App() {
   return (
@@ -24,7 +27,7 @@ function App() {
         showToolbar={true}
       />
       <FlamegraphRenderer
-        trace={jaegerTraceA.data[0]}
+        profile={convertedProfile}
         viewType="single"
         onlyDisplay="flamegraph"
         showToolbar={true}
