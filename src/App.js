@@ -1,11 +1,17 @@
 import React from "react";
-import { FlamegraphRenderer, convertJaegerTraceToProfile } from "@pyroscope/flamegraph";
+import { FlamegraphRenderer, convertJaegerTraceToProfile, diffTwoProfiles } from "@pyroscope/flamegraph";
 import "@pyroscope/flamegraph/dist/index.css";
-import { pyroscopeCPU } from "./TestData";
+import { pyroscopeCPU } from "./TestProfileA";
 import { pyroscopeDiffCPU } from "./TestDiffData";
+import { jaegerTraceCRaw } from "./TestTraceCRaw";
 import { jaegerTraceC } from "./TestTraceC";
 import { jaegerTraceB } from "./TestTraceB";
 import { jaegerTraceA } from "./TestTraceA";
+import { slowTrace } from "./slowTrace";
+import { fastTrace } from "./fastTrace";
+
+let slowTraceData = slowTrace.data[0]
+let fastTraceData = fastTrace.data[0]
 
 let trace = jaegerTraceC.data[0]
 let convertedProfile = convertJaegerTraceToProfile(trace);
@@ -32,6 +38,16 @@ function App() {
         viewType="single"
         onlyDisplay="flamegraph"
         showToolbar={true}
+      />
+      <h1>Jaeger Trace C</h1>
+      <FlamegraphRenderer
+        profile={convertJaegerTraceToProfile(trace[0])}
+        onlyDisplay="flamegraph"
+      />
+      <h1>Diff Two traces</h1>
+      <FlamegraphRenderer
+        profile={diffTwoProfiles(convertJaegerTraceToProfile(slowTrace), convertJaegerTraceToProfile(fastTrace))}
+        onlyDisplay="flamegraph"
       />
     </div>
   );
