@@ -33,20 +33,14 @@ function App() {
         onlyDisplay="flamegraph"
         showToolbar={true}
       />
+      <h1>Jaeger Trace</h1>
       <FlamegraphRenderer
         profile={convertedProfile}
-        viewType="single"
-        onlyDisplay="flamegraph"
-        showToolbar={true}
-      />
-      <h1>Jaeger Trace C</h1>
-      <FlamegraphRenderer
-        profile={convertJaegerTraceToProfile(trace[0])}
         onlyDisplay="flamegraph"
       />
-      <h1>Diff Two traces</h1>
+      <h1>Diff Two Jaeger Traces</h1>
       <FlamegraphRenderer
-        profile={diffTwoProfiles(convertJaegerTraceToProfile(slowTrace), convertJaegerTraceToProfile(fastTrace))}
+        profile={diffTwoProfiles(convertJaegerTraceToProfile(slowTraceData), convertJaegerTraceToProfile(fastTraceData))}
         onlyDisplay="flamegraph"
       />
     </div>
